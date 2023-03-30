@@ -1,6 +1,7 @@
 import pyrebase
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for
-from 
+import firebase_admin
+from firebase_admin import credentials, auth
 
 app = Flask(__name__)
 app.secret_key = "session"
@@ -38,6 +39,27 @@ def login():
 @app.route("/welcome")
 def welcome():
     return render_template("welcome.html")
+
+
+@app.route("/forget-password", methods=["POST", "GET"])
+def forget_password():
+    if request.method == "POST":
+        cred = credentials.Certificate('firebase_private_key.json')
+        firebase_admin.initialize_app(cred)
+        email = request.form.get("email")
+        user = firebase_admin.auth.get_user_by_email(email)
+        if user.uid == None:
+            pass
+        else:
+            redirect(url_for('reset_password'))
+    return render_template("forget_password.html")
+
+
+@app.route("/reset-password")
+def reset_password():
+    return render_template("set_password.html")
+
+
 
 
 if __name__ == "__main__":
