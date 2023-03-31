@@ -1,5 +1,5 @@
 import pyrebase
-from flask import Flask, flash, redirect, render_template, request, session, abort, url_for
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 import firebase_admin
 from firebase_admin import credentials, auth
 
@@ -17,8 +17,10 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config=config)
-auth = firebase.auth()
+authentication = firebase.auth()
 database = firebase.database()
+cred = credentials.Certificate('firebase_private_key.json')
+firebase_admin.initialize_app(cred)
 
 
 # Login
@@ -28,11 +30,11 @@ def login():
         email = request.form.get("email")
         password = request.form.get("password")
         try:
-            auth.sign_in_with_email_and_password(email, password)
+            authentication.sign_in_with_email_and_password(email, password)
             session["user_email"] = email
             return redirect(url_for("welcome"))
         except:
-            return "failed to login"
+            flash("Please check your crendentials!!!")
     return render_template("login.html")
 
 
@@ -45,21 +47,28 @@ def welcome():
 def forget_password():
     if request.method == "POST":
         cred = credentials.Certificate('firebase_private_key.json')
-        firebase_admin.initialize_app(cred)
+        firebase_admin.initialize_app(cred, name="forget")
         email = request.form.get("email")
         user = firebase_admin.auth.get_user_by_email(email)
-        if user.uid == None:
-            pass
+        if user.uid is not None:
+            return redirect(url_for("reset_password", user_id=user.uid))
         else:
-            redirect(url_for('reset_password'))
+            flash("User does not exist!!!")
     return render_template("forget_password.html")
 
 
-@app.route("/reset-password")
-def reset_password():
-    return render_template("set_password.html")
-
-
+@app.route("/reset-password/<user_id>", methods=["post", "get"])
+def reset_password(user_id):
+    if request.method == "POST":
+        if request.form.get("password") == request.form.get("cpassword"):
+            password = request.form.get("password")
+            firebase_admin.auth.update_user(uid=user_id, password=password)
+            return render_template("login.html")
+        elif request.form.get("password") is None and request.form.get("cpassword") is None:
+            flash("Enter the some value in fields.")
+        else:
+            flash("Both value should be same.")
+    return render_template("reset_password.html", user_id=user_id)
 
 
 if __name__ == "__main__":
