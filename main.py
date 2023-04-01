@@ -19,8 +19,6 @@ config = {
 firebase = pyrebase.initialize_app(config=config)
 authentication = firebase.auth()
 database = firebase.database()
-cred = credentials.Certificate('firebase_private_key.json')
-firebase_admin.initialize_app(cred)
 
 
 # Login
@@ -30,17 +28,32 @@ def login():
         email = request.form.get("email")
         password = request.form.get("password")
         try:
-            authentication.sign_in_with_email_and_password(email, password)
-            session["user_email"] = email
-            return redirect(url_for("welcome"))
-        except:
-            flash("Please check your crendentials!!!")
+            user = authentication.sign_in_with_email_and_password(email, password)
+            if user is not None:
+                session["user_email"] = email
+                admin_user = database.child("Admin").get()
+                admin_user_email = admin_user.val()
+                if email == admin_user_email['Sunny']['email']:
+                    return redirect(url_for("admin", name=admin_user_email['Sunny']['name']))
+                else:
+                    return redirect(url_for('welcome'))
+            else:
+                flash("Please check your credentials!!!")
+        except Exception as e:
+            flash("Please check your credentials!!! ")
     return render_template("login.html")
 
 
 @app.route("/welcome")
 def welcome():
     return render_template("welcome.html")
+
+
+@app.route("/admin/<name>")
+def admin(name):
+    employees = database.child("Employee").get()
+    total_employee = len(employees.val())
+    return render_template("admin.html", name=name, total_employee=total_employee)
 
 
 @app.route("/forget-password", methods=["POST", "GET"])
