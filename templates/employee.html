@@ -1,0 +1,141 @@
+{% include 'base.html' %}
+    <style>
+        .content{
+            margin-left: 19%;
+            margin-top: 7%;
+            padding: 20px;
+            border-radius: 5px;
+            width: fit-content;
+            background-color: white;
+        }
+        svg:hover{
+            transform: scale(1.2,1.2);
+            transition-duration: 0.5s;
+        }
+               table{
+            border-collapse: collapse;
+
+        }
+        .name{
+        color:black;
+        }
+
+        th,
+        td {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+    </style>
+
+<body style="background-color: aliceblue;">
+  <div id="includeHtml"></div>
+  <div class="content">
+    <div class="d-flex align-items-center pb-3">
+        <div>
+            <!-- Title -->
+            <h1 style="color: #3075ba;">Employees</h1>
+            <!-- End Title -->
+            <!--breadcrum start-->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb pmd-breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="Details.html" style="text-decoration:none; color: black;">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Employees</li>
+                </ol>
+            </nav>
+            <!--breadcrum end-->
+        </div>
+        <div style="margin-left: auto;">
+            <button type="submit" class="btn btn-outline-success  mt-3" name="signup" >Add Employee</button> 
+        </div>
+       
+    </div>
+
+
+
+    <table>
+        <thead class="thead-light">
+            <tr>
+              <th>Name</th>
+              <th>Designation</th>
+              <th>ID</th>
+              <th>Phone No</th>
+              <th>Email Address</th>
+              <th>Department</th>
+              <th>Date of Joining</th>
+              <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-title="Name">
+                    <div class="d-flex align-items-center ">
+                        <img src="images/CEO.jpeg" alt="Profile Image" class="rounded-circle mr-3" width="40" height="40">
+                        <div class="media-body m-2 name">
+                            Nimesh Senjaliya
+                        </div>
+                    </div>
+                </td>
+                <td data-title="Designation">Product Designer</td>
+                <td data-title="ID">XYZ-1005</td>
+                <td data-title="Phone No">+91 98250 98250</td>
+                <td data-title="Email Address"><a href="mailto:darlene@xyz.com">Nimeshbhai@xyz.com</a></td>
+                <td data-title="Department">Design</td>
+                <td data-title="Date of Joining">25<sup>th</sup> February, 2018</td>
+                <td data-title="">
+                    <a href="person.html" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                      </svg></a>
+                    <a href="employee-detail.html" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                      </svg></a>
+                    <a href="javascript:void(0);" title="Delete" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm" data-bs-toggle="modal" data-target="#delete_employee_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                      </svg></a>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Name">
+                    <div class="d-flex align-items-center">
+                        <img src="images/CTO.jpeg" alt="Profile Image" class="rounded-circle mr-3" width="40" height="40">
+                        <div class="media-body m-2 name">
+                            Yogesh Savaliya
+                        </div>
+                    </div>
+                </td>
+                <td data-title="Designation">Mobile App Developer</td>
+                <td data-title="ID">XYZ-1255</td>
+                <td data-title="Phone No">+91 98983 84531</td>
+                <td data-title="Email Address"><a href="mailto:robert@xyz.com">Yogeshbhai@xyz.com</a></td>
+                <td data-title="Department">Development</td>
+                <td data-title="Date of Joining">8<sup>th</sup> June, 2017</td>
+                <td data-title="">
+                    <a href="employee-detail.html" class="btn pmd-btn-fab pmd-btn-flat  pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                      </svg></a>
+                    <a href="employee-detail.html" class="btn pmd-btn-fab pmd-btn-flat  pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                      </svg></a>
+                    <a href="javascript:void(0);" title="Delete" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm" data-toggle="modal" data-target="#delete_employee_modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                          </svg>
+                    </a>
+                </td>
+            </tr>
+        
+        </tbody>
+    </table>
+  </div>
+</body>

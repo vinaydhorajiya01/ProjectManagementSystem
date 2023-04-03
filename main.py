@@ -71,7 +71,13 @@ def details():
     phone = admin_user['Sunny']['phone']
     dob = admin_user['Sunny']['dob']
     quote = admin_user['Sunny']['quote']
-    return render_template("details.html", fname=fname, mname=mname, lname=lname, position=position, email=email, gender=gender, phone=phone, dob=dob, quote=quote)
+    return render_template("details.html", fname=fname, mname=mname, lname=lname, position=position, email=email,
+                           gender=gender, phone=phone, dob=dob, quote=quote)
+
+
+@app.route("/admin/employee")
+def employee():
+    return render_template('employee.html')
 
 
 @app.route("/forget-password", methods=["POST", "GET"])
