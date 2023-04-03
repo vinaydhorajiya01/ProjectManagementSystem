@@ -33,8 +33,10 @@ def login():
                 session["user_email"] = email
                 admin_user = database.child("Admin").get()
                 admin_user_email = admin_user.val()
+                session['user_name'] = admin_user_email['Sunny']['fname']
+
                 if email == admin_user_email['Sunny']['email']:
-                    return redirect(url_for("admin", name=admin_user_email['Sunny']['name']))
+                    return redirect(url_for("admin", name=session.get('user_name')))
                 else:
                     return redirect(url_for('welcome'))
             else:
@@ -49,11 +51,27 @@ def welcome():
     return render_template("welcome.html")
 
 
-@app.route("/admin/<name>")
-def admin(name):
+@app.route("/admin")
+def admin():
     employees = database.child("Employee").get()
     total_employee = len(employees.val())
-    return render_template("admin.html", name=name, total_employee=total_employee)
+    admin_user = database.child("Admin").get().val()
+    return render_template("admin.html", name=admin_user['Sunny']['fname'], total_employee=total_employee)
+
+
+@app.route("/admin/details")
+def details():
+    admin_user = database.child("Admin").get().val()
+    fname = admin_user['Sunny']['fname']
+    mname = admin_user['Sunny']['mname']
+    lname = admin_user['Sunny']['lname']
+    position = admin_user['Sunny']['position']
+    email = admin_user['Sunny']['email']
+    gender = admin_user['Sunny']['gender']
+    phone = admin_user['Sunny']['phone']
+    dob = admin_user['Sunny']['dob']
+    quote = admin_user['Sunny']['quote']
+    return render_template("details.html", fname=fname, mname=mname, lname=lname, position=position, email=email, gender=gender, phone=phone, dob=dob, quote=quote)
 
 
 @app.route("/forget-password", methods=["POST", "GET"])
