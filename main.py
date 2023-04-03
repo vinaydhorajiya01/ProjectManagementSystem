@@ -19,7 +19,7 @@ config = {
 firebase = pyrebase.initialize_app(config=config)
 authentication = firebase.auth()
 database = firebase.database()
-
+cred = credentials.Certificate('firebase_private_key.json')
 
 # Login
 @app.route("/", methods=["POST", "GET"])
@@ -30,6 +30,10 @@ def login():
         try:
             user = authentication.sign_in_with_email_and_password(email, password)
             if user is not None:
+                cred = credentials.Certificate('firebase_private_key.json')
+                firebase_admin.initialize_app(cred)
+                user_id = firebase_admin.auth.get_user_by_email(email)
+                session['user_id'] = user_id.uid
                 session["user_email"] = email
                 admin_user = database.child("Admin").get()
                 admin_user_email = admin_user.val()
@@ -42,7 +46,7 @@ def login():
             else:
                 flash("Please check your credentials!!!")
         except Exception as e:
-            flash("Please check your credentials!!! ")
+            flash(e)
     return render_template("login.html")
 
 
@@ -75,9 +79,46 @@ def details():
                            gender=gender, phone=phone, dob=dob, quote=quote)
 
 
-@app.route("/admin/employee")
+@app.route("/admin/employee", methods=['get', 'post'])
 def employee():
-    return render_template('employee.html')
+    if request.method == 'POST':
+        name = request.form.get("name")
+        position = request.form.get("position")
+        id = request.form.get("id")
+        phone = request.form.get("phone")
+        email = request.form.get("email")
+        department = request.form.get("department")
+        doj = request.form.get("doj")
+        result = database.child("Employee").get()
+        for res in result.each():
+            if id == res.val()['id']:
+                key = res.key()
+        database.child("Employee").child(key).update({
+            "name": name,
+            "position": position,
+            "phone": phone,
+            "email": email,
+            "department": department,
+            "doj": doj
+        })
+        flash("Data update successfully.")
+    employee = database.child('Employee').get()
+    return render_template('employee.html', employee=employee)
+
+
+@app.route("/admin/settings", methods=['get', 'post'])
+def setting():
+    if request.method == "POST":
+        current_password = request.form.get("currentpassword")
+        password = request.form.get("password")
+        repeat_password = request.form.get("repeatpassword")
+        if current_password == repeat_password:
+            flash("Please enter different password.")
+        elif password == repeat_password:
+            firebase_admin.initialize_app(cred)
+            firebase_admin.auth.update_user(uid=session.get('user_id'), password=password)
+            flash("Password updated successfully")
+    return render_template("settings.html")
 
 
 @app.route("/forget-password", methods=["POST", "GET"])
@@ -88,6 +129,7 @@ def forget_password():
         email = request.form.get("email")
         user = firebase_admin.auth.get_user_by_email(email)
         if user.uid is not None:
+            session['user_id'] = user.uid
             return redirect(url_for("reset_password", user_id=user.uid))
         else:
             flash("User does not exist!!!")
@@ -106,6 +148,11 @@ def reset_password(user_id):
         else:
             flash("Both value should be same.")
     return render_template("reset_password.html", user_id=user_id)
+
+
+@app.route("/")
+def logout():
+    return render_template("login.html")
 
 
 if __name__ == "__main__":

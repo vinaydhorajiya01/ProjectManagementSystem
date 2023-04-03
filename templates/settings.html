@@ -11,6 +11,12 @@
 
 </style>
 <body style="background-color: aliceblue;">
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
 <div class="new">
     <div id="includeHtml"></div>
     <div id="content" class="pmd-content admin section-container">
@@ -39,7 +45,7 @@
                         don't use elsewhere.</p>
                 </div>
                 <div class="card-body">
-                    <form id="changepasswordform" method="post" action="" novalidate="novalidate">
+                    <form id="changepasswordform" method="post" action="/admin/settings" novalidate="novalidate">
                         <div class="form-group pmd-textfield pmd-textfield-floating-label">
                             <label for="currentpassword" class="col-form-label">Current Password</label>
                             <input type="password" class="form-control" id="currentpassword"

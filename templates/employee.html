@@ -1,38 +1,237 @@
-{% include 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    {% include 'base.html' %}
+    <script>
+      $(document).on("change", ".uploadProfileInput", function () {
+        var triggerInput = this;
+        var currentImg = $(this).closest(".pic-holder").find(".pic").attr("src");
+        var holder = $(this).closest(".pic-holder");
+        var wrapper = $(this).closest(".profile-pic-wrapper");
+        $(wrapper).find('[role="alert"]').remove();
+        triggerInput.blur();
+        var files = !!this.files ? this.files : [];
+        if (!files.length || !window.FileReader) {
+          return;
+        }
+        if (/^image/.test(files[0].type)) {
+          // only image file
+          var reader = new FileReader(); // instance of the FileReader
+          reader.readAsDataURL(files[0]); // read the local file
+      
+          reader.onloadend = function () {
+            $(holder).addClass("uploadInProgress");
+            $(holder).find(".pic").attr("src", this.result);
+            $(holder).append(
+              '<div class="upload-loader"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div></div>'
+            );
+      
+            // Dummy timeout; call API or AJAX below
+            setTimeout(() => {
+              $(holder).removeClass("uploadInProgress");
+              $(holder).find(".upload-loader").remove();
+              // If upload successful
+              if (Math.random() < 0.9) {
+                $(wrapper).append(
+                  '<div class="snackbar show" role="alert"><i class="fa fa-check-circle text-success"></i> Profile image updated successfully</div>'
+                );
+      
+                // Clear input after upload
+                $(triggerInput).val("");
+      
+                setTimeout(() => {
+                  $(wrapper).find('[role="alert"]').remove();
+                }, 3000);
+              } else {
+                $(holder).find(".pic").attr("src", currentImg);
+                $(wrapper).append(
+                  '<div class="snackbar show" role="alert"><i class="fa fa-times-circle text-danger"></i> There is an error while uploading! Please try again later.</div>'
+                );
+      
+                // Clear input after upload
+                $(triggerInput).val("");
+                setTimeout(() => {
+                  $(wrapper).find('[role="alert"]').remove();
+                }, 3000);
+              }
+            }, 1500);
+          };
+        } else {
+          $(wrapper).append(
+            '<div class="alert alert-danger d-inline-block p-2 small" role="alert">Please choose the valid image.</div>'
+          );
+          setTimeout(() => {
+            $(wrapper).find('role="alert"').remove();
+          }, 3000);
+        }
+      });
+    </script>
     <style>
+      .profile-pic-wrapper {
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .pic-holder {
+        text-align: center;
+        position: relative;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      
+      .pic-holder .pic {
+        height: 100%;
+        width: 100%;
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: center;
+        object-position: center;
+      }
+      
+      .pic-holder .upload-file-block,
+      .pic-holder .upload-loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(90, 92, 105, 0.7);
+        color: #f8f9fc;
+        font-size: 12px;
+        font-weight: 600;
+        opacity: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      
+      .pic-holder .upload-file-block {
+        cursor: pointer;
+      }
+      
+      .pic-holder:hover .upload-file-block,
+      .uploadProfileInput:focus ~ .upload-file-block {
+        opacity: 1;
+      }
+      
+      .pic-holder.uploadInProgress .upload-file-block {
+        display: none;
+      }
+      
+      .pic-holder.uploadInProgress .upload-loader {
+        opacity: 1;
+      }
+      
+      /* Snackbar css */
+      .snackbar {
+        visibility: hidden;
+        min-width: 250px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 14px;
+        transform: translateX(-50%);
+      }
+      
+      .snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+      
+      @-webkit-keyframes fadein {
+        from {
+          bottom: 0;
+          opacity: 0;
+        }
+        to {
+          bottom: 30px;
+          opacity: 1;
+        }
+      }
+      
+      @keyframes fadein {
+        from {
+          bottom: 0;
+          opacity: 0;
+        }
+        to {
+          bottom: 30px;
+          opacity: 1;
+        }
+      }
+      
+      @-webkit-keyframes fadeout {
+        from {
+          bottom: 30px;
+          opacity: 1;
+        }
+        to {
+          bottom: 0;
+          opacity: 0;
+        }
+      }
+      
+      @keyframes fadeout {
+        from {
+          bottom: 30px;
+          opacity: 1;
+        }
+        to {
+          bottom: 0;
+          opacity: 0;
+        }
+      }
+      
+        .table tr:last-child th, 
+.table tr:last-child td{
+  border:none;
+}
         .content{
             margin-left: 19%;
             margin-top: 7%;
             padding: 20px;
             border-radius: 5px;
-            width: fit-content;
+            width: 80%;
             background-color: white;
         }
         svg:hover{
             transform: scale(1.2,1.2);
             transition-duration: 0.5s;
         }
-               table{
-            border-collapse: collapse;
-
-        }
-        .name{
-        color:black;
-        }
-
-        th,
-        td {
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
     </style>
-
+</head>
 <body style="background-color: aliceblue;">
-  <div id="includeHtml"></div>
-  <div class="content">
+<div id="includeHtml"></div>
+<div class="content">
     <div class="d-flex align-items-center pb-3">
         <div>
             <!-- Title -->
@@ -50,92 +249,299 @@
             <!--breadcrum end-->
         </div>
         <div style="margin-left: auto;">
-            <button type="submit" class="btn btn-outline-success  mt-3" name="signup" >Add Employee</button> 
+            <button type="submit" class="btn btn-outline-success  mt-3" name="signup" data-toggle="modal"
+                    data-target="#add">Add Employee
+            </button>
         </div>
-       
+
     </div>
-
-
-
-    <table>
+    <table class="table pmd-table display dt-responsive nowrap dataTable no-footer dtr-column collapsed">
         <thead class="thead-light">
-            <tr>
-              <th>Name</th>
-              <th>Designation</th>
-              <th>ID</th>
-              <th>Phone No</th>
-              <th>Email Address</th>
-              <th>Department</th>
-              <th>Date of Joining</th>
-              <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Name</th>
+            <th>Designation</th>
+            <th>ID</th>
+
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
-            <tr>
-                <td data-title="Name">
-                    <div class="d-flex align-items-center ">
-                        <img src="images/CEO.jpeg" alt="Profile Image" class="rounded-circle mr-3" width="40" height="40">
-                        <div class="media-body m-2 name">
-                            Nimesh Senjaliya
-                        </div>
+        {% for emp in employee: %}
+        <tr>
+            <td data-title="Name">
+                <div class="d-flex align-items-center ">
+                    <img src="/static/images/CTO.jpeg" alt="Profile Image" class="rounded-circle mr-3" width="40"
+                         height="40">
+                    <div class="media-body m-2">
+                        {{ emp.val()['name'] }}
                     </div>
-                </td>
-                <td data-title="Designation">Product Designer</td>
-                <td data-title="ID">XYZ-1005</td>
-                <td data-title="Phone No">+91 98250 98250</td>
-                <td data-title="Email Address"><a href="mailto:darlene@xyz.com">Nimeshbhai@xyz.com</a></td>
-                <td data-title="Department">Design</td>
-                <td data-title="Date of Joining">25<sup>th</sup> February, 2018</td>
-                <td data-title="">
-                    <a href="person.html" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                      </svg></a>
-                    <a href="employee-detail.html" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                      </svg></a>
-                    <a href="javascript:void(0);" title="Delete" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm" data-bs-toggle="modal" data-target="#delete_employee_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                      </svg></a>
-                </td>
-            </tr>
+                </div>
+            </td>
+            <td data-title="Designation">{{ emp.val()['position'] }}</td>
+            <td data-title="ID">{{ emp.val()['id'] }}</td>
 
-            <tr>
-                <td data-title="Name">
-                    <div class="d-flex align-items-center">
-                        <img src="images/CTO.jpeg" alt="Profile Image" class="rounded-circle mr-3" width="40" height="40">
-                        <div class="media-body m-2 name">
-                            Yogesh Savaliya
-                        </div>
-                    </div>
-                </td>
-                <td data-title="Designation">Mobile App Developer</td>
-                <td data-title="ID">XYZ-1255</td>
-                <td data-title="Phone No">+91 98983 84531</td>
-                <td data-title="Email Address"><a href="mailto:robert@xyz.com">Yogeshbhai@xyz.com</a></td>
-                <td data-title="Department">Development</td>
-                <td data-title="Date of Joining">8<sup>th</sup> June, 2017</td>
-                <td data-title="">
-                    <a href="employee-detail.html" class="btn pmd-btn-fab pmd-btn-flat  pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+            <td data-title="">
+                <a data-toggle="modal" data-target="#view{{ emp.val()['id'] }}"
+                   class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-eye-fill" viewBox="0 0 16 16">
                         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                      </svg></a>
-                    <a href="employee-detail.html" class="btn pmd-btn-fab pmd-btn-flat  pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    </svg>
+                </a>
+                <a data-toggle="modal" data-target="#edit{{ emp.val()['id'] }}"
+                   class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                      </svg></a>
-                    <a href="javascript:void(0);" title="Delete" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm" data-toggle="modal" data-target="#delete_employee_modal">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                          </svg>
-                    </a>
-                </td>
-            </tr>
-        
+                        <path fill-rule="evenodd"
+                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                    </svg>
+                </a>
+                <a href="javascript:void(0);" title="Delete"
+                   class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm" data-bs-toggle="modal"
+                   data-target="#delete_employee_modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
         </tbody>
     </table>
-  </div>
+    <!-- Button trigger modal -->
+    {% for emp in employee: %}
+    <!-- View Modal -->
+    <div class="modal fade" id="view{{ emp.val()['id'] }}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Basic Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container mt-2 mb-2  d-flex justify-content-center">
+                        <div class="card p-4">
+                            <img class="rounded-circle justify-content-center align-items-center" src="/static/images/CTO.jpeg"
+                                 height="100" width="100"/>
+                            <table class="table">
+
+                                <tbody>
+
+                                <tr>
+                                    <th scope="row">Name</th>
+                                    <td>{{ emp.val()['name'] }}</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Designation</th>
+                                    <td>{{ emp.val()['position'] }}</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">ID</th>
+                                    <td>{{ emp.val()['id'] }}</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Phone No</th>
+                                    <td>{{ emp.val()['phone'] }}</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Email Address</th>
+                                    <td>{{ emp.val()['email'] }}</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Department</th>
+                                    <td>{{ emp.val()['department'] }}</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Date of Joining</th>
+                                    <td>{{ emp.val()['doj'] }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!-- Edit Modal -->
+    {% for emp in employee: %}
+    <form action="/admin/employee" method="post">
+    <div class="modal fade" id="edit{{ emp.val()['id'] }}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Basic Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container mt-2 mb-2  d-flex justify-content-center">
+                        <div class="card p-4">
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Update Profile Photo</label>
+                                <input class="form-control" type="file" id="formFile">
+                            </div>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th scope="row">Name</th>
+                                    <td><input type="text" class="form-control" aria-describedby="emailHelp" name="name"
+                                               value="{{ emp.val()['name'] }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Designation</th>
+                                    <td><input type="text" class="form-control" aria-describedby="emailHelp" name="position"
+                                               value="{{ emp.val()['position'] }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">ID</th>
+                                    <td><input type="text" class="form-control" aria-describedby="emailHelp" name="id"
+                                               value="{{ emp.val()['id'] }}" disabled >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Phone No</th>
+                                    <td><input type="number" class="form-control" aria-describedby="emailHelp" name="phone"
+                                               value="{{ emp.val()['phone'] }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Email Address</th>
+                                    <td><input type="email" class="form-control" aria-describedby="emailHelp" name="email"
+                                               value="{{ emp.val()['email'] }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Department</th>
+                                    <td><input type="text" class="form-control" aria-describedby="emailHelp" name="department"
+                                               value="{{ emp.val()['department'] }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Date of Joining</th>
+                                    <td><input type="text" class="form-control" aria-describedby="emailHelp" name="doj"
+                                               value="{{ emp.val()['doj'] }}">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+    {% endfor %}
+    <!-- ADD Modal -->
+    <div class="modal fade" id="add" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Basic Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container mt-2 mb-2  d-flex justify-content-center">
+                        <div class="card p-4">
+                            <div class="profile-pic-wrapper">
+                                <div class="pic-holder">
+                                    <!-- uploaded pic shown here -->
+                                    <img id="profilePic" class="pic" src="/static/images/avatar.png">
+
+                                    <Input class="uploadProfileInput" type="file" name="profile_pic"
+                                           id="newProfilePhoto" accept="image/*" style="opacity: 0;"/>
+                                    <label for="newProfilePhoto" class="upload-file-block">
+                                        <div class="text-center">
+                                            <div class="mb-2">
+                                                <i class="fa fa-camera fa-2x"></i>
+                                            </div>
+                                            <div class="text-uppercase">
+                                                Add <br/> Profile Photo
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <table class="table">
+
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">Name</th>
+                                        <td><input type="text" class="form-control" aria-describedby="emailHelp">
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Designation</th>
+                                        <td><input type="text" class="form-control" aria-describedby="emailHelp">
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">ID</th>
+                                        <td><input type="text" class="form-control" aria-describedby="emailHelp">
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Phone No</th>
+                                        <td><input type="number" class="form-control" aria-describedby="emailHelp">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Email Address</th>
+                                        <td><input type="email" class="form-control" aria-describedby="emailHelp">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Department</th>
+                                        <td><input type="name" class="form-control" aria-describedby="emailHelp">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Date of Joining</th>
+                                        <td><input type="text" class="form-control" aria-describedby="emailHelp">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+</html>
