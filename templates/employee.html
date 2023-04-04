@@ -76,6 +76,7 @@
           }, 3000);
         }
       });
+
     </script>
     <style>
       .profile-pic-wrapper {
@@ -227,9 +228,16 @@
             transform: scale(1.2,1.2);
             transition-duration: 0.5s;
         }
+
     </style>
 </head>
 <body style="background-color: aliceblue;">
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
 <div id="includeHtml"></div>
 <div class="content">
     <div class="d-flex align-items-center pb-3">
@@ -298,9 +306,8 @@
                               d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                     </svg>
                 </a>
-                <a href="javascript:void(0);" title="Delete"
-                   class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm" data-bs-toggle="modal"
-                   data-target="#delete_employee_modal">
+                <a href="{{ url_for('removeData', id=emp.val()['id']) }}" title="Delete"
+                   class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -329,7 +336,8 @@
                 <div class="modal-body">
                     <div class="container mt-2 mb-2  d-flex justify-content-center">
                         <div class="card p-4">
-                            <img class="rounded-circle justify-content-center align-items-center" src="/static/images/CTO.jpeg"
+                            <img class="rounded-circle justify-content-center align-items-center"
+                                 src="/static/images/CTO.jpeg"
                                  height="100" width="100"/>
                             <table class="table">
 
@@ -382,152 +390,72 @@
     <!-- Edit Modal -->
     {% for emp in employee: %}
     <form action="/admin/employee" method="post">
-    <div class="modal fade" id="edit{{ emp.val()['id'] }}" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Basic Information</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container mt-2 mb-2  d-flex justify-content-center">
-                        <div class="card p-4">
-                            <div class="mb-3">
-                                <label for="formFile" class="form-label">Update Profile Photo</label>
-                                <input class="form-control" type="file" id="formFile">
-                            </div>
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <th scope="row">Name</th>
-                                    <td><input type="text" class="form-control" aria-describedby="emailHelp" name="name"
-                                               value="{{ emp.val()['name'] }}">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Designation</th>
-                                    <td><input type="text" class="form-control" aria-describedby="emailHelp" name="position"
-                                               value="{{ emp.val()['position'] }}">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">ID</th>
-                                    <td><input type="text" class="form-control" aria-describedby="emailHelp" name="id"
-                                               value="{{ emp.val()['id'] }}" disabled >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Phone No</th>
-                                    <td><input type="number" class="form-control" aria-describedby="emailHelp" name="phone"
-                                               value="{{ emp.val()['phone'] }}">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Email Address</th>
-                                    <td><input type="email" class="form-control" aria-describedby="emailHelp" name="email"
-                                               value="{{ emp.val()['email'] }}">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Department</th>
-                                    <td><input type="text" class="form-control" aria-describedby="emailHelp" name="department"
-                                               value="{{ emp.val()['department'] }}">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Date of Joining</th>
-                                    <td><input type="text" class="form-control" aria-describedby="emailHelp" name="doj"
-                                               value="{{ emp.val()['doj'] }}">
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+        <div class="modal fade" id="edit{{ emp.val()['id'] }}" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Basic Information</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    </form>
-    {% endfor %}
-    <!-- ADD Modal -->
-    <div class="modal fade" id="add" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Basic Information</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container mt-2 mb-2  d-flex justify-content-center">
-                        <div class="card p-4">
-                            <div class="profile-pic-wrapper">
-                                <div class="pic-holder">
-                                    <!-- uploaded pic shown here -->
-                                    <img id="profilePic" class="pic" src="/static/images/avatar.png">
-
-                                    <Input class="uploadProfileInput" type="file" name="profile_pic"
-                                           id="newProfilePhoto" accept="image/*" style="opacity: 0;"/>
-                                    <label for="newProfilePhoto" class="upload-file-block">
-                                        <div class="text-center">
-                                            <div class="mb-2">
-                                                <i class="fa fa-camera fa-2x"></i>
-                                            </div>
-                                            <div class="text-uppercase">
-                                                Add <br/> Profile Photo
-                                            </div>
-                                        </div>
-                                    </label>
+                    <div class="modal-body">
+                        <div class="container mt-2 mb-2  d-flex justify-content-center">
+                            <div class="card p-4">
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Update Profile Photo</label>
+                                    <input class="form-control" type="file" id="formFile">
                                 </div>
-
                                 <table class="table">
-
                                     <tbody>
                                     <tr>
                                         <th scope="row">Name</th>
-                                        <td><input type="text" class="form-control" aria-describedby="emailHelp">
+                                        <td><input type="text" class="form-control" aria-describedby="emailHelp"
+                                                   name="name"
+                                                   value="{{ emp.val()['name'] }}">
                                         </td>
-
                                     </tr>
                                     <tr>
                                         <th scope="row">Designation</th>
-                                        <td><input type="text" class="form-control" aria-describedby="emailHelp">
+                                        <td><input type="text" class="form-control" aria-describedby="emailHelp"
+                                                   name="position"
+                                                   value="{{ emp.val()['position'] }}">
                                         </td>
-
                                     </tr>
                                     <tr>
                                         <th scope="row">ID</th>
-                                        <td><input type="text" class="form-control" aria-describedby="emailHelp">
+                                        <td><input type="text" class="form-control" aria-describedby="emailHelp"
+                                                   name="id"
+                                                   value="{{ emp.val()['id'] }}" readonly>
                                         </td>
-
                                     </tr>
                                     <tr>
                                         <th scope="row">Phone No</th>
-                                        <td><input type="number" class="form-control" aria-describedby="emailHelp">
+                                        <td><input type="number" class="form-control" aria-describedby="emailHelp"
+                                                   name="phone"
+                                                   value="{{ emp.val()['phone'] }}">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Email Address</th>
-                                        <td><input type="email" class="form-control" aria-describedby="emailHelp">
+                                        <td><input type="email" class="form-control" aria-describedby="emailHelp"
+                                                   name="email"
+                                                   value="{{ emp.val()['email'] }}">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Department</th>
-                                        <td><input type="name" class="form-control" aria-describedby="emailHelp">
+                                        <td><input type="text" class="form-control" aria-describedby="emailHelp"
+                                                   name="department"
+                                                   value="{{ emp.val()['department'] }}">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Date of Joining</th>
-                                        <td><input type="text" class="form-control" aria-describedby="emailHelp">
+                                        <td><input type="text" class="form-control" aria-describedby="emailHelp"
+                                                   name="doj"
+                                                   value="{{ emp.val()['doj'] }}">
                                         </td>
                                     </tr>
                                     </tbody>
@@ -536,12 +464,101 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+                        <button type="submit" class="btn btn-primary" name="editForm">Save changes</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+    {% endfor %}
+    <!-- ADD Modal -->
+    <form action="/admin/employee/add" method="post" enctype="multipart/form-data">
+        <div class="modal fade" id="add" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Basic Information</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container mt-2 mb-2  d-flex justify-content-center">
+                            <div class="card p-4">
+                                <div class="profile-pic-wrapper">
+                                    <div class="pic-holder">
+                                        <!-- uploaded pic shown here -->
+                                        <img id="profilePic" class="pic" src="/static/images/avatar.png">
+
+                                        <Input class="uploadProfileInput" type="file" name="profile_pic"
+                                               id="newProfilePhoto" accept="image/*" style="opacity: 0;"/>
+                                        <label for="newProfilePhoto" class="upload-file-block">
+                                            <div class="text-center">
+                                                <div class="mb-2">
+                                                    <i class="fa fa-camera fa-2x"></i>
+                                                </div>
+                                                <div class="text-uppercase">
+                                                    Add <br/> Profile Photo
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <table class="table">
+
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Name</th>
+                                            <td><input type="text" name="name" class="form-control" aria-describedby="emailHelp">
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Designation</th>
+                                            <td><input type="text" name="position" class="form-control" aria-describedby="emailHelp">
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">ID</th>
+                                            <td><input type="text" name="id" class="form-control" aria-describedby="emailHelp">
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Phone No</th>
+                                            <td><input type="number" name="phone" class="form-control" aria-describedby="emailHelp">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Email Address</th>
+                                            <td><input type="email" name="email" class="form-control" aria-describedby="emailHelp">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Department</th>
+                                            <td><input type="text" name="department" class="form-control" aria-describedby="emailHelp">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Date of Joining</th>
+                                            <td><input type="text" name="doj" class="form-control" aria-describedby="emailHelp">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" name="addForm">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
 </html>

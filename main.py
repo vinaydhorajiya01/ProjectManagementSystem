@@ -1,10 +1,15 @@
+import os.path
+
 import pyrebase
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, flash, redirect, render_template, request, session, url_for, send_from_directory
 import firebase_admin
+from werkzeug.utils import secure_filename
 from firebase_admin import credentials, auth
 
 app = Flask(__name__)
 app.secret_key = "session"
+# app.config['UPLOAD'] = "static/uploads/"
+
 config = {
     "apiKey": "AIzaSyD7w1t1naoWypN4eEZUhiZhq0l0G6xMdvk",
     "authDomain": "projectmanagement-3e8a8.firebaseapp.com",
@@ -19,7 +24,9 @@ config = {
 firebase = pyrebase.initialize_app(config=config)
 authentication = firebase.auth()
 database = firebase.database()
+storage = firebase.storage()
 cred = credentials.Certificate('firebase_private_key.json')
+
 
 # Login
 @app.route("/", methods=["POST", "GET"])
@@ -81,7 +88,7 @@ def details():
 
 @app.route("/admin/employee", methods=['get', 'post'])
 def employee():
-    if request.method == 'POST':
+    if request.method == 'POST' and request.form.get('editForm'):
         name = request.form.get("name")
         position = request.form.get("position")
         id = request.form.get("id")
@@ -104,6 +111,45 @@ def employee():
         flash("Data update successfully.")
     employee = database.child('Employee').get()
     return render_template('employee.html', employee=employee)
+
+
+@app.route("/admin/employee/add", methods=["POST", "GET"])
+def addEmployee():
+    if request.method == "POST":
+        name = request.form.get("name")
+        position = request.form.get("position")
+        id = request.form.get("id")
+        phone = request.form.get("phone")
+        email = request.form.get("email")
+        department = request.form.get("department")
+        doj = request.form.get("doj")
+        file = request.files["profile_pic"]
+        profile_pic = secure_filename(file.filename)
+        # file.save(os.path.join(app.config['UPLOAD'], profile_pic))
+        storage.child("employee_images").put(profile_pic)
+        data = {
+            "name": name,
+            "position": position,
+            "id": id,
+            "phone": phone,
+            "email": email,
+            "department": department,
+            "doj": doj
+        }
+        database.child("Employee").push(data)
+        redirect(url_for("employee"))
+    return redirect(url_for("employee"))
+
+
+@app.route("/admin/employee/remove/<id>")
+def removeData(id):
+    data = database.child("Employee").get()
+    for record in data.each():
+        if record.val()['id'] == id:
+            database.child("Employee").child(record.key()).remove()
+            flash("Data deleted successfully.")
+            return redirect(url_for("employee"))
+    return None
 
 
 @app.route("/admin/settings", methods=['get', 'post'])
@@ -156,4 +202,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)

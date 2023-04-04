@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   
+    <script>
+        $(function () {
+            $("#includeHtml").load("admin.html");
+        });
+    </script>
+    <style>
+        .content{
+            margin-left: 19%;
+            margin-top: 7%;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            background-color: white;
+        }
+        .inprogress {
+            background-color: #f1e2b3; 
+            padding: 7px; 
+            border-radius: 5px; 
+            letter-spacing: 1px; 
+    
+           }  
+           .Todo {
+            background-color: #d7effc; 
+            padding: 7px; 
+            border-radius: 5px; 
+            letter-spacing: 1px; 
+    
+           }  
+           .done {
+            background-color: #c3f0eb; 
+            padding: 7px; 
+            border-radius: 5px; 
+            letter-spacing: 1px; 
+    
+           }    
+    </style>
+</head>
+<body>
+  <div id="includeHtml"></div>
+  <div class="content">
+    <div class="d-flex align-items-center pb-3">
+        <div>
+            <!-- Title -->
+            <h1 style="color: #3075ba;">Project Assignment</h1>
+            <!-- End Title -->
+            <!--breadcrum start-->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb pmd-breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="Details.html" style="text-decoration:none; color: black;">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Project Management</li>
+                </ol>
+            </nav>
+            <!--breadcrum end-->
+        </div>
+        <div style="margin-left: auto;">
+            <button type="submit" class="btn btn-outline-success  mt-3" name="signup" data-toggle="modal" data-target="#add">Add Task</button> 
+        </div>
+       
+    </div>
+    <table class="table pmd-table display dt-responsive nowrap dataTable no-footer dtr-column collapsed" >
+        <thead class="thead-light">
+            <tr>
+              <th>Task Name</th>
+              <th>Status</th>
+              <th>Assigned To</th>
+              
+              <th>Due Date</th>
+              <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              
+                <td data-title="Designation">Fire Safety Check</td>
+
+                <td data-title="Designation" ><span class="Todo" >To Do</span></td>
+                <td data-title="ID">Sunny kadia</td>
+                <td data-title="ID">14/02/2023</td>
+
+                <td data-title="">
+                    <a data-toggle="modal" data-target="#view" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                      </svg></a>
+                    <a data-toggle="modal" data-target="#edit" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                      </svg></a>
+                    <a href="javascript:void(0);" title="Delete" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm" data-bs-toggle="modal" data-target="#delete_employee_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                      </svg></a>
+                </td>
+            </tr>
+
+            <tr>
+              
+                <td data-title="Designation">Transfer of goods from storage to site</td>
+
+                <td data-title="Designation" ><span class="done" >Done</span></td>
+                <td data-title="ID">Sunny kadia</td>
+                <td data-title="ID">14/02/2023</td>
+
+                <td data-title="">
+                    <a data-toggle="modal" data-target="#view" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                      </svg></a>
+                    <a data-toggle="modal" data-target="#edit" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                      </svg></a>
+                    <a href="javascript:void(0);" title="Delete" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm" data-bs-toggle="modal" data-target="#delete_employee_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                      </svg></a>
+                </td>
+            </tr>
+
+            <tr>
+              
+                <td data-title="Designation">Finalize Communication Plan</td>
+
+                <td data-title="Designation" ><span class="inprogress" >In Progress</span></td>
+                <td data-title="ID">Sunny kadia</td>
+                <td data-title="ID">14/02/2023</td>
+
+                <td data-title="">
+                    <a data-toggle="modal" data-target="#view" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                      </svg></a>
+                    <a data-toggle="modal" data-target="#edit" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                      </svg></a>
+                    <a href="javascript:void(0);" title="Delete" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-sm" data-bs-toggle="modal" data-target="#delete_employee_modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                      </svg></a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    
+  <!-- View Modal -->
+  <div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Task Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container mt-2 mb-2  d-flex justify-content-center"> 
+                <div class="card p-4"> 
+                    <table class="table">
+                       
+                        <tbody>
+                            <tr>
+                                <th scope="row">Task Name</th>
+                                <td>Fire Safety Check</td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Description</th>
+                                <td>Add files in Github 
+                                    take some rest and give it on monday
+                                </td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Assigned To</th>
+                                <td>Sunny Kadia</td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Due Date	</th>
+                                <td>14/02/2023</td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Status</th>
+                                <td><span style="background-color: #f1e2b3; padding: 7px; border-radius: 5px; letter-spacing: 1px; ">In Progress</span></td>
+                                
+                              </tr>
+                              
+                        </tbody>
+                      </table>
+                   </div> </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+    <!-- Edit Modal -->
+  <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Task Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container mt-2 mb-2  d-flex justify-content-center"> 
+                <div class="card p-4"> 
+                  
+                  <table class="table">
+                      
+                        <tbody>
+                            <tr>
+                                <th scope="row">Task Name</th>
+                                <td><input type="text" class="form-control" placeholder="Fire Safety Check">
+                                </td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Description</th>
+                                <td><input type="text" class="form-control" placeholder="Add files in Github 
+                                    take some rest and give it on monday">
+                                    </td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Assigned To</th>
+                                <td><input type="text" class="form-control" placeholder="Sunny Kadia">
+                                    </td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Due Date</th>
+                                <td><input type="Date" class="form-control" placeholder="14/02/2023">
+                                    </td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Status</th>
+                                <td>  
+                                    <select class="form-control" >
+                                      <option>To Do</option>
+                                      <option>In Progress</option>
+                                      <option>Done</option>
+                                    </select>
+                                   </td>
+                                
+                              </tr>
+                              
+                        
+                        </tbody>
+                      </table>
+                   </div> </div>
+        </div>
+        <div class="modal-footer">
+         <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ADD Modal -->
+  <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Basic Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container mt-2 mb-2  d-flex justify-content-center"> 
+                <div class="card p-4"> 
+                 
+                  
+                    <table class="table">
+                       
+                       
+                        <tbody>
+                            <tr>
+                                <th scope="row">Task Name</th>
+                                <td><input type="text" class="form-control" placeholder="Fire Safety Check">
+                                </td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Description</th>
+                                <td><input type="text" class="form-control" placeholder="Add files in Github 
+                                    take some rest and give it on monday">
+                                    </td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Assigned To</th>
+                                <td> <select class="form-control" >
+                                    <option>Select Employee..</option>
+                                    <option>Sunny Kadia</option>
+                                    <option>Vinay Dhorajiya</option>
+                                    <option>Kevin khunt</option>
+                                  </select>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Due Date</th>
+                                <td><input type="Date" class="form-control" placeholder="14/02/2023">
+                                    </td>
+                                
+                              </tr>
+                              <tr>
+                                <th scope="row">Status</th>
+                                <td>  
+                                    <select class="form-control" >
+                                      <option>To Do</option>
+                                      <option>In Progress</option>
+                                      <option>Done</option>
+                                    </select>
+                                   </td>
+                                
+                              </tr>
+                              
+                        
+                        </tbody>
+                      </table>
+                   </div> </div>
+        </div>
+        <div class="modal-footer">
+         <button type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div>
+</body>
+</html>
