@@ -209,11 +209,9 @@ def editProjectData():
             "description": task_desc,
             "status": task_status
         }
-        print(data)
         for task in tasks.each():
             if task.val()['id'] == task_id:
                 key = task.key()
-                print(key)
         database.child("Tasks").child(key).update(data)
         return redirect(url_for("projectManagement"))
     return redirect(url_for("projectManagement"))
@@ -233,6 +231,16 @@ def deleteTask(id):
 @app.route("/admin/history")
 def history():
     return render_template("history.html")
+
+
+@app.route("/admin/history/active-time")
+def activeTime():
+    return render_template("activetime.html")
+
+
+@app.route("/admin/history/active-time/screen-shots")
+def screenShot():
+    return render_template("screenshot.html")
 
 
 @app.route("/forget-password", methods=["POST", "GET"])
