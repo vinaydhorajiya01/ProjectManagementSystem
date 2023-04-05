@@ -1,14 +1,12 @@
-import os.path
-
-import pyrebase
-from flask import Flask, flash, redirect, render_template, request, session, url_for, send_from_directory
+import uuid
 import firebase_admin
-from werkzeug.utils import secure_filename
+import pyrebase
 from firebase_admin import credentials, auth
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 
 app = Flask(__name__)
 app.secret_key = "session"
-# app.config['UPLOAD'] = "static/uploads/"
+app.config['UPLOAD'] = "static/uploads/"
 
 config = {
     "apiKey": "AIzaSyD7w1t1naoWypN4eEZUhiZhq0l0G6xMdvk",
@@ -124,9 +122,9 @@ def addEmployee():
         department = request.form.get("department")
         doj = request.form.get("doj")
         file = request.files["profile_pic"]
-        profile_pic = secure_filename(file.filename)
-        # file.save(os.path.join(app.config['UPLOAD'], profile_pic))
-        storage.child("employee_images").put(profile_pic)
+        # file.save(os.path.join(app.config['UPLOAD'], file.filename))
+        # print(file.filename)
+        # storage.child("employee_images").put(file)
         data = {
             "name": name,
             "position": position,
@@ -137,6 +135,7 @@ def addEmployee():
             "doj": doj
         }
         database.child("Employee").push(data)
+        # os.remove(temp.name)
         redirect(url_for("employee"))
     return redirect(url_for("employee"))
 
@@ -165,6 +164,64 @@ def setting():
             firebase_admin.auth.update_user(uid=session.get('user_id'), password=password)
             flash("Password updated successfully")
     return render_template("settings.html")
+
+
+@app.route("/admin/project-management", methods=['post', 'get'])
+def projectManagement():
+    projects = database.child("Tasks").get()
+    employees = database.child("Employee").get()
+    if request.method == "POST":
+        task_name = request.form.get("name")
+        task_assigned_to = request.form.get("employee")
+        task_due_date = request.form.get("due_date")
+        task_desc = request.form.get("desc")
+        task_status = request.form.get("status")
+        task_id = "T" + str(uuid.uuid1())
+        data = {
+            "name": task_name,
+            "id": task_id,
+            "assigned_to": task_assigned_to,
+            "due_date": task_due_date,
+            "description": task_desc,
+            "status": task_status
+        }
+        database.child("Tasks").push(data)
+        flash("Data is Successfully added.")
+        return redirect(url_for("projectManagement"))
+    return render_template("project_management.html", projects=projects, employees=employees)
+
+
+@app.route("/admin/project-management/edit", methods=["post", "get"])
+def editProjectData():
+    if request.method == "POST":
+        task_name = request.form.get('task_name')
+        task_id = request.form.get('task_id')
+        task_assigned_to = request.form.get('assigned_to')
+        task_due_date = request.form.get('due_date')
+        task_desc = request.form.get('desc')
+        task_status = request.form.get('status')
+        tasks = database.child("Tasks").get()
+        data = {
+            "name": task_name,
+            "id": task_id,
+            "assigned_to": task_assigned_to,
+            "due_date": task_due_date,
+            "description": task_desc,
+            "status": task_status
+        }
+        print(data)
+        for task in tasks.each():
+            if task.val()['id'] == task_id:
+                key = task.key()
+                print(key)
+        database.child("Tasks").child(key).update(data)
+        return redirect(url_for("projectManagement"))
+    return redirect(url_for("projectManagement"))
+
+
+@app.route("/admin/history")
+def history():
+    return render_template("history.html")
 
 
 @app.route("/forget-password", methods=["POST", "GET"])
