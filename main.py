@@ -219,6 +219,17 @@ def editProjectData():
     return redirect(url_for("projectManagement"))
 
 
+@app.route("/admin/project-management/delete/<id>")
+def deleteTask(id):
+    result = database.child("Tasks").get()
+    for res in result.each():
+        if res.val()['id'] == id:
+            database.child("Tasks").child(res.key()).remove()
+            flash("Data deleted successfully")
+            return redirect(url_for("projectManagement"))
+    return redirect(url_for("projectManagement"))
+
+
 @app.route("/admin/history")
 def history():
     return render_template("history.html")
