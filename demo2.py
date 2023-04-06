@@ -1,25 +1,21 @@
-import pyrebase
-import os
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import storage
+import datetime
 
-config = {
-    "apiKey": "AIzaSyD7w1t1naoWypN4eEZUhiZhq0l0G6xMdvk",
-    "authDomain": "projectmanagement-3e8a8.firebaseapp.com",
-    "databaseURL": "https://projectmanagement-3e8a8-default-rtdb.firebaseio.com",
-    "projectId": "projectmanagement-3e8a8",
-    "storageBucket": "projectmanagement-3e8a8.appspot.com",
-    "messagingSenderId": "398063613086",
-    "appId": "1:398063613086:web:05aa2a5bb0ccb2d821778f",
-    "measurementId": "G-DBHEPCK3YT"
-}
+# Fetch the service account key JSON file contents
+cred = credentials.Certificate("firebase_private_key.json")
 
-firebase = pyrebase.initialize_app(config=config)
-authentication = firebase.auth()
-database = firebase.database()
-storage = firebase.storage()
+# Initialize the app with a service account, granting admin privileges
+app = firebase_admin.initialize_app(cred, {
+    'storageBucket': 'projectmanagement-3e8a8.appspot.com',
+}, name='storage')
 
-email = "sunny@gmail.com"
-password = "123456"
+bucket = storage.bucket(app=app)
+blobs = bucket.list_blobs(prefix="DESKTOP-3S7MM6C")
+for blob in blobs:
+    print(blob.generate_signed_url(datetime.timedelta(seconds=100000), method='GET'))
+# blob2 = bucket.blob('')
 
-user = authentication.sign_in_with_email_and_password(email, password)
-url = storage.child("/DESKTOP-3S7MM6C").get_url(user["idToken"])
-print(url)
+# print(blob.generate_signed_url(datetime.timedelta(seconds=1000), method='GET'))
+# print(blob)

@@ -94,6 +94,7 @@ def employee():
         email = request.form.get("email")
         department = request.form.get("department")
         doj = request.form.get("doj")
+        assigned_pc = request.form.get("assigned_pc")
         result = database.child("Employee").get()
         for res in result.each():
             if id == res.val()['id']:
@@ -104,7 +105,8 @@ def employee():
             "phone": phone,
             "email": email,
             "department": department,
-            "doj": doj
+            "doj": doj,
+            "assigned_pc": assigned_pc
         })
         flash("Data update successfully.")
     employee = database.child('Employee').get()
@@ -121,6 +123,7 @@ def addEmployee():
         email = request.form.get("email")
         department = request.form.get("department")
         doj = request.form.get("doj")
+        assigned_pc = request.form.get("assigned_pc")
         file = request.files["profile_pic"]
         # file.save(os.path.join(app.config['UPLOAD'], file.filename))
         # print(file.filename)
@@ -132,7 +135,8 @@ def addEmployee():
             "phone": phone,
             "email": email,
             "department": department,
-            "doj": doj
+            "doj": doj,
+            "assigned_pc": assigned_pc
         }
         database.child("Employee").push(data)
         # os.remove(temp.name)
@@ -233,8 +237,13 @@ def history():
     return render_template("history.html")
 
 
-@app.route("/admin/history/active-time")
+@app.route("/admin/history/active-time", methods=["post", "get"])
 def activeTime():
+    if request.method == "get":
+        date = request.form.get("date")
+        print(date)
+        employee = database.child("Employee").get()
+        return render_template("active.html", date=date, employee=employee)
     return render_template("activetime.html")
 
 

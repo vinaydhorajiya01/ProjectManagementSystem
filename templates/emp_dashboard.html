@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <link rel="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+
+  <script>
+    $(function () {
+      $("#includeHtml").load("empside.html");
+    });
+  </script>
+  <style>
+     .card{
+    background-color: beige;
+      border: 5px solid aliceblue;
+      border-radius: 25px;
+      margin-top: 15%;
+ }
+ 
+ .btn1{
+  background-color: #d7effc; 
+  padding: 7px; 
+  border-radius: 5px; 
+  letter-spacing: 1px;
+  border: none;
+  text-decoration: none; 
+  color: black;
+  margin: 4%;
+  
+ }
+ .btn1:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+
+ .card:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+}
+  </style>
+
+</head>
+
+<body>
+  <div id="includeHtml"></div>
+  <div style="  
+    margin-left: 20%;
+    margin-top: 7%;
+    padding: 20px;
+    border-radius: 25px;
+
+">
+<div class="d-flex align-items-center pb-3">
+    <div>
+        <h1 style="color: #3075ba;">Your Task</h1>
+       
+ 
+            <div class="card" style="width: 350px;height: 250px;">
+              <div class="card-body">
+                <h5 class="card-title text-center ">Project 1</h5>
+                <h6 class="card-subtitle mb-2 text-muted mt-1">UI changes</h6>
+                <p class="card-text">Modify files and update back soon</p>
+               
+
+            </div>
+            <div class="card-footer p-3">
+              <div>Status : <span>To Do</span></div>
+              <span><button class="btn1" >To Do</button></span>
+              <span><button class="btn1" >In Progress</button></span>
+              <span><button class="btn1" >Done</button></span>
+                       
+            </div>
+        </div> 
+          
+       </div>
+    </div>
+      
+  </div>
+</body>
+
+</html>

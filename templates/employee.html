@@ -77,6 +77,9 @@
         }
       });
 
+
+
+
     </script>
     <style>
       .profile-pic-wrapper {
@@ -229,6 +232,9 @@
             transition-duration: 0.5s;
         }
 
+
+
+
     </style>
 </head>
 <body style="background-color: aliceblue;">
@@ -377,6 +383,10 @@
                                     <th scope="row">Date of Joining</th>
                                     <td>{{ emp.val()['doj'] }}</td>
                                 </tr>
+                                <tr>
+                                    <th scope="row">Assigned PC</th>
+                                    <td>{{ emp.val()['assigned_pc'] }}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -458,6 +468,13 @@
                                                    value="{{ emp.val()['doj'] }}">
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th scope="row">Assigned PC</th>
+                                        <td><input type="text" class="form-control" aria-describedby="emailHelp"
+                                                   name="assigned_pc"
+                                                   value="{{ emp.val()['assigned_pc'] }}">
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -491,7 +508,7 @@
                                         <!-- uploaded pic shown here -->
                                         <img id="profilePic" class="pic" src="/static/images/avatar.png">
 
-                                        <Input class="uploadProfileInput" type="file" name="profile_pic"
+                                        <input class="uploadProfileInput" type="file" name="profile_pic"
                                                id="newProfilePhoto" accept="image/*" style="opacity: 0;"/>
                                         <label for="newProfilePhoto" class="upload-file-block">
                                             <div class="text-center">
@@ -510,40 +527,53 @@
                                         <tbody>
                                         <tr>
                                             <th scope="row">Name</th>
-                                            <td><input type="text" name="name" class="form-control" aria-describedby="emailHelp">
+                                            <td><input type="text" name="name" class="form-control"
+                                                       aria-describedby="emailHelp">
                                             </td>
 
                                         </tr>
                                         <tr>
                                             <th scope="row">Designation</th>
-                                            <td><input type="text" name="position" class="form-control" aria-describedby="emailHelp">
+                                            <td><input type="text" name="position" class="form-control"
+                                                       aria-describedby="emailHelp">
                                             </td>
 
                                         </tr>
                                         <tr>
                                             <th scope="row">ID</th>
-                                            <td><input type="text" name="id" class="form-control" aria-describedby="emailHelp">
+                                            <td><input type="text" name="id" class="form-control"
+                                                       aria-describedby="emailHelp">
                                             </td>
 
                                         </tr>
                                         <tr>
                                             <th scope="row">Phone No</th>
-                                            <td><input type="number" name="phone" class="form-control" aria-describedby="emailHelp">
+                                            <td><input type="number" name="phone" class="form-control"
+                                                       aria-describedby="emailHelp">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Email Address</th>
-                                            <td><input type="email" name="email" class="form-control" aria-describedby="emailHelp">
+                                            <td><input type="email" name="email" class="form-control"
+                                                       aria-describedby="emailHelp">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Department</th>
-                                            <td><input type="text" name="department" class="form-control" aria-describedby="emailHelp">
+                                            <td><input type="text" name="department" class="form-control"
+                                                       aria-describedby="emailHelp">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Date of Joining</th>
-                                            <td><input type="text" name="doj" class="form-control" aria-describedby="emailHelp">
+                                            <td><input type="text" name="doj" class="form-control"
+                                                       aria-describedby="emailHelp">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Assigned PC</th>
+                                            <td><input type="text" name="assigned_pc" class="form-control"
+                                                       aria-describedby="emailHelp">
                                             </td>
                                         </tr>
                                         </tbody>
