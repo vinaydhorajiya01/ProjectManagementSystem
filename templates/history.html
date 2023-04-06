@@ -29,13 +29,6 @@
           transition-duration: 0.5s;
       }
 
-
-
-
-
-
-
-
     </style>
 </head>
 <body>
@@ -60,19 +53,21 @@
 
 
     </div>
-    <table class="table pmd-table display dt-responsive nowrap dataTable no-footer dtr-column collapsed">
-        <thead class="thead-light">
-        <tr>
-            <th>Date</th>
-            <th>Check History</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <form action="/admin/history/active-time" method="get">
-                <td data-title="DATE" style="letter-spacing: 1px;"><input type="date" class="form-control w-50" name="date"></td>
-                <td data-title="time"><button type="submit" class="btn btn-primary">Full History</button>
+    <form action="/admin/history/active-time" method="get">
+        <table class="table pmd-table display dt-responsive nowrap dataTable no-footer dtr-column collapsed">
+            <thead class="thead-light">
+            <tr>
+                <th>Date</th>
+                <th>Check History</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td data-title="DATE" style="letter-spacing: 1px;"><input type="date" class="form-control w-50"
+                                                                          name="date"></td>
+                <td data-title="time">
+                    <button type="submit" class="btn btn-primary">Full History</button>
                 </td>
 
                 <td data-title="">
@@ -88,10 +83,10 @@
                         </svg>
                     </a>
                 </td>
-            </form>
-        </tr>
-        </tbody>
-    </table>
+            </tr>
+            </tbody>
+        </table>
+    </form>
 </div>
 </body>
 </html>
