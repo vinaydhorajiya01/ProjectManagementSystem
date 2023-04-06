@@ -10,11 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
 
-    <script>
-        $(function () {
-            $("#includeHtml").load("empdash.html");
-        });
-    </script>
+    {% include 'emp_sidebar.html' %}
     <style>
         .cover-content {
             margin-left: 20%;
@@ -33,7 +29,7 @@
     <div class="cover-content">
         <div class="page-content">
             <div class="d-flex d-flex-row align-items-center mobile-view">
-                <img alt="Profile-Pic" src="images/CTO.jpeg"
+                <img alt="Profile-Pic" src="/static/images/CTO.jpeg"
                     class="profile-pic rounded-circle pmd-z-depth-light-2-1 mr-md-4 mr-sm-0" height="200" width="180">
                 <div class="media-body px-5">
                     <h1>Yogesh Savaliya</h1>
@@ -43,11 +39,11 @@
                     <div class="pmd-social-icon">
                         <a class="btn btn-sm pmd-btn-fab pmd-ripple-effect btn-light" href="javascript:void(0);"
                             title="Facebook">
-                            <img src="images/facebook.png">
+                            <img src="/static/images/facebook.png">
                         </a>
                         <a class="btn btn-sm pmd-btn-fab pmd-ripple-effect btn-light" href="javascript:void(0);"
                             title="Twitter">
-                            <img src="images/twitter.png">
+                            <img src="/static/images/twitter.png">
 
                         </a>
 

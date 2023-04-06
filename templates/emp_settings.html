@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <link rel="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
-        type="text/javascript"></script>
+            type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
 
-    <script>
-        $(function () {
-            $("#includeHtml").load("empside.html");
-        });
-    </script>
+    {% include 'emp_sidebar.html' %}
     <style>
         .new {
             margin-left: 20%;
@@ -25,64 +21,69 @@
             padding: 20px;
             border-radius: 5px;
             width: 1000px;
-
         }
-    
- 
+
     </style>
 </head>
 <body style="background-color: aliceblue;">
-    <div class="new">
-        <div id="includeHtml"></div>
-        <div id="content" class="pmd-content admin section-container">
-          <!-- Title -->
-          <h1 style="color: #3075ba;">Account Settings</h1>
-          <!-- End Title -->
-          
-          <!--breadcrum start-->
-          <nav aria-label="breadcrumb">
-              <ol class="breadcrumb pmd-breadcrumb">
-                  <li class="breadcrumb-item">
-                      <a href="empdash.html" style="color: #3075ba;
+<div class="new">
+    <div id="includeHtml"></div>
+    <div id="content" class="pmd-content admin section-container">
+        <!-- Title -->
+        <h1 style="color: #3075ba;">Account Settings</h1>
+        <!-- End Title -->
+
+        <!--breadcrum start-->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb pmd-breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="empdash.html" style="color: #3075ba;
                       text-decoration: none;">Dashboard</a>
-                  </li>
-                  <li class="breadcrumb-item active" aria-current="page">Account Settings</li>
-              </ol>
-          </nav>
-          <!--breadcrum end-->
-      
-          <div class="page-content">
-              <!-- Change Password -->
-              <div class="card" style="background-color: white; border: none;">
-                  <div class="card-header mt-2" style="border: none;">
-                      <h3 class="card-title" style="color: #3075ba;">Change Password</h3>
-                      <p class="card-subtitle" style="color: gray;">It's a good idea to use a strong password that you don't use elsewhere.</p>
-                  </div>
-                  <div class="card-body">
-                      <form id="changepasswordform" method="post" action="" novalidate="novalidate">
-                          <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                              <label for="currentpassword" class="col-form-label">Current Password</label>
-                              <input type="password" class="form-control" id="currentpassword" name="currentpassword"><span class="pmd-textfield-focused"></span>
-                          </div>
-                          <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                              <label for="password" class="col-form-label">New Password</label>
-                              <input type="password" class="form-control" id="password" name="password"><span class="pmd-textfield-focused"></span>
-                          </div>
-                          <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                              <label for="repeatpassword" class="col-form-label">Confirm Password</label>
-                              <input type="password" class="form-control" id="repeatpassword" name="repeatpassword"><span class="pmd-textfield-focused"></span>
-                          </div>
-                          <div class="form-group">
-                              <button type="submit" class="btn btn-outline-success pmd-ripple-effect mt-3" name="signup" value="Update Password" >Update Password</button> 
-                              <button class="btn btn-outline-secondary pmd-ripple-effect mt-3" type="reset">Cancel</button>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-             
-          </div>
-      </div>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Account Settings</li>
+            </ol>
+        </nav>
+        <!--breadcrum end-->
+
+        <div class="page-content">
+            <!-- Change Password -->
+            <div class="card" style="background-color: white; border: none;">
+                <div class="card-header mt-2" style="border: none;">
+                    <h3 class="card-title" style="color: #3075ba;">Change Password</h3>
+                    <p class="card-subtitle" style="color: gray;">It's a good idea to use a strong password that you
+                        don't use elsewhere.</p>
+                </div>
+                <div class="card-body">
+                    <form id="changepasswordform" method="post" action="" novalidate="novalidate">
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                            <label for="currentpassword" class="col-form-label">Current Password</label>
+                            <input type="password" class="form-control" id="currentpassword"
+                                   name="currentpassword"><span class="pmd-textfield-focused"></span>
+                        </div>
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                            <label for="password" class="col-form-label">New Password</label>
+                            <input type="password" class="form-control" id="password" name="password"><span
+                                class="pmd-textfield-focused"></span>
+                        </div>
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                            <label for="repeatpassword" class="col-form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="repeatpassword" name="repeatpassword"><span
+                                class="pmd-textfield-focused"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-outline-success pmd-ripple-effect mt-3" name="signup"
+                                    value="Update Password">Update Password
+                            </button>
+                            <button class="btn btn-outline-secondary pmd-ripple-effect mt-3" type="reset">Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
     </div>
-  
+</div>
+
 </body>
 </html>

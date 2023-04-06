@@ -47,7 +47,7 @@ def login():
                 if email == admin_user_email['Sunny']['email']:
                     return redirect(url_for("admin", name=session.get('user_name')))
                 else:
-                    return redirect(url_for('welcome'))
+                    return redirect(url_for('employeeDashboard'))
             else:
                 flash("Please check your credentials!!!")
         except Exception as e:
@@ -55,9 +55,19 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/welcome")
-def welcome():
-    return render_template("welcome.html")
+@app.route("/employee/dashboard")
+def employeeDashboard():
+    return render_template("emp_dashboard.html")
+
+
+@app.route("/employee/details")
+def employeeDetails():
+    return render_template("emp_details.html")
+
+
+@app.route("/employee/settings")
+def employeeSettings():
+    return render_template("emp_settings.html")
 
 
 @app.route("/admin")
@@ -243,7 +253,7 @@ def activeTime():
         date = request.form.get("date")
         print(date)
         employee = database.child("Employee").get()
-        return render_template("active.html", date=date, employee=employee)
+        return render_template("activetime.html", date=date, employee=employee)
     return render_template("activetime.html")
 
 
@@ -283,6 +293,7 @@ def reset_password(user_id):
 
 @app.route("/")
 def logout():
+    session.clear()
     return render_template("login.html")
 
 

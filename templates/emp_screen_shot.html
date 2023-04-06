@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-   
-    <script>
-        $(function () {
-            $("#includeHtml").load("empside.html");
-        });
-    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    {% include 'emp_sidebar.html' %}
     <style>
         .content{
             margin-left: 19%;
@@ -26,8 +26,8 @@
     </style>
 </head>
 <body>
-  <div id="includeHtml"></div>
-  <div class="content">
+<div id="includeHtml"></div>
+<div class="content">
     <div class="d-flex align-items-center pb-3">
         <div>
             <!-- Title -->
@@ -44,140 +44,142 @@
             </nav>
             <!--breadcrum end-->
         </div>
-     
+
     </div>
     <div class="row">
         <div class="col-md-4">
-          <div class="thumbnail">
-            <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-              <img src="images/123.png" alt="Lights" style="width:100%">
-             
-            </a>
-            <div class="caption text-center ">
-                <p>5:45pm</p>
-              </div>
-          </div>
+            <div class="thumbnail">
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             <div class="thumbnail">
-              <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-                <img src="images/123.png" alt="Lights" style="width:100%">
-               
-              </a>
-              <div class="caption text-center ">
-                  <p>5:45pm</p>
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
                 </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="thumbnail">
-              <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-                <img src="images/123.png" alt="Lights" style="width:100%">
-               
-              </a>
-              <div class="caption text-center ">
-                  <p>5:45pm</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="thumbnail">
-              <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-                <img src="images/123.png" alt="Lights" style="width:100%">
-               
-              </a>
-              <div class="caption text-center ">
-                  <p>5:45pm</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="thumbnail">
-              <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-                <img src="images/123.png" alt="Lights" style="width:100%">
-               
-              </a>
-              <div class="caption text-center ">
-                  <p>5:45pm</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="thumbnail">
-              <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-                <img src="images/123.png" alt="Lights" style="width:100%">
-               
-              </a>
-              <div class="caption text-center ">
-                  <p>5:45pm</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="thumbnail">
-              <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-                <img src="images/123.png" alt="Lights" style="width:100%">
-               
-              </a>
-              <div class="caption text-center ">
-                  <p>5:45pm</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="thumbnail">
-              <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-                <img src="images/123.png" alt="Lights" style="width:100%">
-               
-              </a>
-              <div class="caption text-center ">
-                  <p>5:45pm</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="thumbnail">
-              <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-                <img src="images/123.png" alt="Lights" style="width:100%">
-               
-              </a>
-              <div class="caption text-center ">
-                  <p>5:45pm</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="thumbnail">
-              <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-                <img src="images/123.png" alt="Lights" style="width:100%">
-               
-              </a>
-              <div class="caption text-center ">
-                  <p>5:45pm</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="thumbnail">
-              <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c" target="_blank">
-                <img src="images/123.png" alt="Lights" style="width:100%">
-               
-              </a>
-              <div class="caption text-center ">
-                  <p>5:45pm</p>
-                </div>
-            </div>
-          </div>
-      
-      
-      
-      
-      
-      
-      
         </div>
-    
-  
-    <div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <a href="https://firebasestorage.googleapis.com/v0/b/projectmanagement-3e8a8.appspot.com/o/DESKTOP-3S7MM6C%2F1680589162.6301184.png?alt=media&token=6d7877dc-e0a9-4551-ba6f-9912b637962c"
+                   target="_blank">
+                    <img src="images/123.png" alt="Lights" style="width:100%">
+
+                </a>
+                <div class="caption text-center ">
+                    <p>5:45pm</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
