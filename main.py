@@ -295,7 +295,7 @@ def screenShot(name, assigned_pc, date):
             dates.append(img_date)
             times.append(time)
             current_imgs.append(img)
-    return render_template("screenshot.html", name=name, img_url=current_imgs)
+    return render_template("screenshot.html", name=name, data=zip(img_url, times))
 
 
 @app.route("/forget-password", methods=["POST", "GET"])

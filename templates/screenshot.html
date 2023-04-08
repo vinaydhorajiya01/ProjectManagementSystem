@@ -48,7 +48,7 @@
 
     </div>
     <div class="row">
-        {% for img in img_url: %}
+        {% for img, time in data: %}
         <div class="col-md-4">
             <div class="thumbnail">
                 <a href="{{ img }}" target="_blank">
@@ -56,7 +56,7 @@
 
                 </a>
                 <div class="caption text-center ">
-                    <p>5:45pm</p>
+                    <p>{{ time }}</p>
                 </div>
             </div>
         </div>
