@@ -42,7 +42,32 @@
 
 }
   </style>
+  <script>
+    function todo(){
+      if (confirm("are you sure you want to continue")) {
+        document.getElementById("change").innerHTML = "To Do";
+      } else {
+        document.getElementById("change").innerHTML = "To Do";
+      }
+     
+    }
+    function progress(){
+      if (confirm("are you sure you want to continue")) {
+        document.getElementById("change").innerHTML = "In Progress";
+      } else {
+        document.getElementById("change").innerHTML = "To Do";
+      }
 
+    }
+    function done(){
+      if (confirm("are you sure you want to continue")) {
+        document.getElementById("change").innerHTML = "Done";
+      } else {
+        document.getElementById("change").innerHTML = "To Do";
+      }
+    }
+
+  </script>
 </head>
 
 <body>
@@ -68,11 +93,10 @@
 
             </div>
             <div class="card-footer p-3">
-              <div>Status : <span>To Do</span></div>
-              <span><button class="btn1" >To Do</button></span>
-              <span><button class="btn1" >In Progress</button></span>
-              <span><button class="btn1" >Done</button></span>
-                       
+              <div>Status : <span id="change">To Do</span></div>
+              <span><button class="btn1" onclick="todo()">To Do</button></span>
+              <span><button class="btn1" onclick="progress()">In Progress </button></span>
+              <span><button class="btn1" onclick="done()">Done</button></span>  
             </div>
         </div> 
           

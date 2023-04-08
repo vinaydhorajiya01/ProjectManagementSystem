@@ -53,6 +53,7 @@
 
 
     </div>
+    <form  action="{{ url_for("employeeScreenShot")}}" method="post">
     <table class="table pmd-table display dt-responsive nowrap dataTable no-footer dtr-column collapsed">
         <thead class="thead-light">
         <tr>
@@ -63,10 +64,10 @@
         <tbody>
         <tr>
 
-            <td data-title="DATE" style="letter-spacing: 1px;"><input type="date" class="form-control w-50"
+            <td data-title="DATE" style="letter-spacing: 1px;"><input type="date" name='date' class="form-control w-50"
                                                                       placeholder="yesterday"></td>
 
-            <td data-title="time"><a href="empss.html" style="text-decoration: none;">Full History</a></td>
+            <td data-title="time"><button type="submit" class='btn btn-primary'>Full History</button></td>
 
 
         </tr>
@@ -75,7 +76,7 @@
         </tbody>
     </table>
 
-
+</form>
 </div>
 </body>
 </html>

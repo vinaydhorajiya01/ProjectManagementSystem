@@ -5,6 +5,8 @@ from datetime import datetime
 import firebase_admin
 import pyrebase
 from firebase_admin import credentials, auth, storage
+from datetime import datetime
+from firebase_admin import credentials, auth
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 
 app = Flask(__name__)
@@ -73,6 +75,17 @@ def employeeDetails():
 @app.route("/employee/settings")
 def employeeSettings():
     return render_template("emp_settings.html")
+
+
+@app.route("/employee/history")
+def employeeHistory():
+    return render_template("emp_history.html")
+
+@app.route("/employee/history/screen-shots",methods=["GET", 'POST'])
+def employeeScreenShot():
+    if request.method == "POST":
+        startdate = request.form.get('date')
+    return render_template("emp_screen_shot.html",date=startdate)
 
 
 @app.route("/admin")
