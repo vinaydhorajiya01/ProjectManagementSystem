@@ -1,7 +1,10 @@
+import re
 import uuid
+import datetime as dt
+from datetime import datetime
 import firebase_admin
 import pyrebase
-from firebase_admin import credentials, auth
+from firebase_admin import credentials, auth, storage
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 
 app = Flask(__name__)
@@ -22,9 +25,11 @@ config = {
 firebase = pyrebase.initialize_app(config=config)
 authentication = firebase.auth()
 database = firebase.database()
-storage = firebase.storage()
+# storage = firebase.storage()
 cred = credentials.Certificate('firebase_private_key.json')
-
+app_storage = firebase_admin.initialize_app(cred, {
+    'storageBucket': 'projectmanagement-3e8a8.appspot.com',
+}, name='storage')
 
 # Login
 @app.route("/", methods=["POST", "GET"])
@@ -249,17 +254,35 @@ def history():
 
 @app.route("/admin/history/active-time", methods=["post", "get"])
 def activeTime():
-    if request.method == "get":
+    if request.method == "POST":
         date = request.form.get("date")
-        print(date)
         employee = database.child("Employee").get()
         return render_template("activetime.html", date=date, employee=employee)
     return render_template("activetime.html")
 
 
-@app.route("/admin/history/active-time/screen-shots")
-def screenShot():
-    return render_template("screenshot.html")
+@app.route("/admin/history/active-time/screen-shots/<name>/<assigned_pc>/<date>")
+def screenShot(name, assigned_pc, date):
+    bucket = storage.bucket(app=app_storage)
+    blobs = bucket.list_blobs(prefix=assigned_pc)
+    img_url = []
+    dates = []
+    times = []
+    current_imgs = []
+    pattern = r'/(\d+\.\d+)\.'
+    for blob in blobs:
+        img_url.append(blob.generate_signed_url(dt.timedelta(seconds=100), method='GET'))
+    for img in img_url:
+        list = re.findall(pattern, img)
+        img_date = float(list[0])
+        dateTime = datetime.fromtimestamp(img_date)
+        img_date = dateTime.date()
+        time = dateTime.time()
+        if str(img_date) == date:
+            dates.append(img_date)
+            times.append(time)
+            current_imgs.append(img)
+    return render_template("screenshot.html", name=name, img_url=current_imgs)
 
 
 @app.route("/forget-password", methods=["POST", "GET"])

@@ -13,9 +13,10 @@ app = firebase_admin.initialize_app(cred, {
 
 bucket = storage.bucket(app=app)
 blobs = bucket.list_blobs(prefix="DESKTOP-3S7MM6C")
+img_url = []
 for blob in blobs:
-    print(blob.generate_signed_url(datetime.timedelta(seconds=100000), method='GET'))
+    img_url.append(blob.generate_signed_url(datetime.timedelta(seconds=100000), method='GET'))
 # blob2 = bucket.blob('')
-
+print(img_url)
 # print(blob.generate_signed_url(datetime.timedelta(seconds=1000), method='GET'))
 # print(blob)
