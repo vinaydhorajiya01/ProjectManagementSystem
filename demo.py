@@ -5,6 +5,7 @@ import random
 import time
 import pyrebase
 import platform
+from datetime import datetime
 
 t = 0
 firebaseConfig = {
@@ -16,7 +17,7 @@ firebaseConfig = {
     "messagingSenderId": "398063613086",
     "appId": "1:398063613086:web:05aa2a5bb0ccb2d821778f",
     "measurementId": "G-DBHEPCK3YT"
-};
+}
 
 
 def take_screenshot():
@@ -29,18 +30,38 @@ def take_screenshot():
     storage = firebase.storage()
     storage.child(system_name + "/" + file_name).put(file_name)
 
+activity_times = [
+  
+]
 
-while t != 500:
+while t != 15:
+    now = datetime.now()
+    current_time = now.strftime("%y-%m-%d %H:%M:%S")   
+
     with keyboard.Events() as events:
         event = events.get(1.0)
+
     with mouse.Events() as events1:
         event1 = events1.get(1.0)
-    if event is None and t == 300 and event1 is None:
-        take_screenshot()
-        t = 0
+
+    if event is None and event1 is None and t == 5 :
+        activity_times.append({'inactive': current_time})
+
     elif event is not None or event1 is not None:
-        t = 0
+        activity_times.append({'active': current_time})
+
     elif t == random.randint(1, 10):
         take_screenshot()
-    t += 1
+    t+=1
     print(t)
+    
+# total_active_time = datetime.time(0, 0, 0)  # Initialize total active time to zero
+
+
+# for activity in activity_times:
+#     active_time = activity['active']
+#     inactive_time = activity['inactive']
+#     duration = inactive_time - active_time
+#     total_active_time += duration  # Add the duration to the total active time
+
+print(f"Total active time: { activity_times}")
